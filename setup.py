@@ -4,25 +4,35 @@ from setuptools import setup
 # The directory containing this file
 HERE = pathlib.Path(__file__).parent
 
+# The text of the README file
+README = (HERE / "README.md").read_text()
+
 setup(
     name="mitbih_processor",
     version="1.0.0",
     description="Process MIT-BIH Arrhythmia Database records with PyWavelets",
-    url="https://github.com/realpython/reader",
-    author="Real Python",
-    author_email="office@realpython.com",
+    long_description=README,
+    url="https://github.com/jorge4larcon/mitbih_processor",
+    author="Jorge Alarcon",
+    author_email="jorge4larcon@gmail.com",
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
-    packages=["reader"],
+    packages=["mitbih_processor"],
     include_package_data=True,
-    install_requires=["feedparser", "html2text"],
+    install_requires=[
+        "numpy",
+        "pandas",
+        "PyWavelets",
+        "scipy",
+        "wfdb"
+    ],
     entry_points={
         "console_scripts": [
-            "realpython=reader.__main__:main",
+            "mitbih_processor=mitbih_processor.__main__:main",
         ]
     },
 )
