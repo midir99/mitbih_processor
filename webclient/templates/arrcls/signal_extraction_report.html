@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Signal Extraction Report{% endblock %}
+{% block content %}
+<h3>Signal Extraction Report ({{ ecg_lead }})</h3>
+<table class="table table-sm">
+    <thead>
+    <tr>
+        {{ theaders|safe }}
+        <th scope="row">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ trows|safe }}
+    </tbody>
+</table>
+
+<p>All these signals were saved in {{ filename }}</p>
+{% endblock %}

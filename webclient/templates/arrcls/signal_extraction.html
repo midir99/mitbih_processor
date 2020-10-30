@@ -1,0 +1,688 @@
+{% extends 'base.html' %}
+
+{% block title %}Signal Extraction{% endblock %}
+{% block content %}
+<h3>To extract the signals from the MIT-BIH Arrhythmia Database you have to define the extraction parameters</h3>
+<br>
+<form method="post" id="extractionParamsForm">
+    {# MIT-BIH Arrhythmia Database #}
+    <div class="form-group">
+        <label for="mitdbpath">MIT-BIH Arrhythmia Database Path</label>
+        <input class="form-control" id="mitdbpath"
+               placeholder="Enter the location of the database"
+               type="text" name="mitdbPath" required>
+        <small class="form-text text-muted">Here goes the location of the
+            MIT-BIH database in your file system.</small>
+    </div>
+
+    {# Arrhythmia types #}
+    <label>Arrhythmia Types</label>
+    <div class="row mb-2">
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="arrNormalBeat"
+                       type="checkbox"
+                       value="" name="arrNormalBeat">
+                <label class="form-check-label" for="arrNormalBeat">
+                    Normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrLeftBundleBranchBlockBeat" type="checkbox"
+                       value="" name="arrLeftBundleBranchBlockBeat">
+                <label class="form-check-label"
+                       for="arrLeftBundleBranchBlockBeat">
+                    Left bundle branch block beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrRightBundleBranchBlockBeat" type="checkbox"
+                       value="" name="arrRightBundleBranchBlockBeat">
+                <label class="form-check-label"
+                       for="arrRightBundleBranchBlockBeat">
+                    Right bundle branch block beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrAtrialPrematureBeat"
+                       type="checkbox" name="arrAtrialPrematureBeat"
+                       value="">
+                <label class="form-check-label" for="arrAtrialPrematureBeat">
+                    Atrial premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrAberratedAtrialPrematureBeat" type="checkbox"
+                       value="" name="arrAberratedAtrialPrematureBeat">
+                <label class="form-check-label"
+                       for="arrAberratedAtrialPrematureBeat">
+                    Aberrated atrial premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrNodalJunctionalPrematureBeat" type="checkbox"
+                       value="" name="arrNodalJunctionalPrematureBeat">
+                <label class="form-check-label"
+                       for="arrNodalJunctionalPrematureBeat">
+                    Nodal (junctional) premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrSupraventricularPrematureBeat" type="checkbox"
+                       value="" name="arrSupraventricularPrematureBeat">
+                <label class="form-check-label"
+                       for="arrSupraventricularPrematureBeat">
+                    Supraventricular premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrPrematureVentricularContraction" type="checkbox"
+                       value="" name="arrPrematureVentricularContraction">
+                <label class="form-check-label"
+                       for="arrPrematureVentricularContraction">
+                    Premature ventricular contraction
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrFusionOfVentricularAndNormalBeat" type="checkbox"
+                       value="" name="arrFusionOfVentricularAndNormalBeat">
+                <label class="form-check-label"
+                       for="arrFusionOfVentricularAndNormalBeat">
+                    Fusion of ventricular and normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrStartOfVentricularFlutterFibrillation"
+                       type="checkbox"
+                       value="" name="arrStartOfVentricularFlutterFibrillation">
+                <label class="form-check-label"
+                       for="arrStartOfVentricularFlutterFibrillation">
+                    Start of ventricular flutter/fibrillation
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="arrVentricularFlutterWave"
+                       type="checkbox"
+                       value="" name="arrVentricularFlutterWave">
+                <label class="form-check-label"
+                       for="arrVentricularFlutterWave">
+                    Ventricular flutter wave
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrEndOfVentricularFlutterFibrillation"
+                       type="checkbox"
+                       value="" name="arrEndOfVentricularFlutterFibrillation">
+                <label class="form-check-label"
+                       for="arrEndOfVentricularFlutterFibrillation">
+                    End of ventricular flutter/fibrillation
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrAtrialEscapeBeat"
+                       type="checkbox"
+                       value="" name="arrAtrialEscapeBeat">
+                <label class="form-check-label" for="arrAtrialEscapeBeat">
+                    Atrial escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrNodalJunctionalEscapeBeat" type="checkbox"
+                       value="" name="arrNodalJunctionalEscapeBeat">
+                <label class="form-check-label"
+                       for="arrNodalJunctionalEscapeBeat">
+                    Nodal (junctional) escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrVentricularEscapeBeat"
+                       type="checkbox"
+                       value="" name="arrVentricularEscapeBeat">
+                <label class="form-check-label" for="arrVentricularEscapeBeat">
+                    Ventricular escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrPacedBeat"
+                       type="checkbox"
+                       value="" name="arrPacedBeat">
+                <label class="form-check-label" for="arrPacedBeat">
+                    Paced beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrFusionOfPacedAndNormalBeat" type="checkbox"
+                       value="" name="arrFusionOfPacedAndNormalBeat">
+                <label class="form-check-label"
+                       for="arrFusionOfPacedAndNormalBeat">
+                    Fusion of paced and normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrNonConductedPWave"
+                       type="checkbox"
+                       value="" name="arrNonConductedPWave">
+                <label class="form-check-label" for="arrNonConductedPWave">
+                    Non-conducted P-wave (blocked APB)
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrUnclassifiableBeat"
+                       type="checkbox"
+                       value="" name="arrUnclassifiableBeat">
+                <label class="form-check-label" for="arrUnclassifiableBeat">
+                    Unclassifiable beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrIsolatedQRSLikeArtifact"
+                       type="checkbox"
+                       value="" name="arrIsolatedQRSLikeArtifact">
+                <label class="form-check-label"
+                       for="arrIsolatedQRSLikeArtifact">
+                    Isolated QRS-like artifact
+                </label>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-secondary btn-sm" id="checkArrhythmiasBtn">Check all</button>
+    <small class="form-text text-muted">Select the arrhythmia types you
+        want.</small>
+
+    {# Records #}
+    <label>Records</label>
+    <div class="row mb-2">
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record100" type="checkbox"
+                       value="" name="record100">
+                <label class="form-check-label" for="record100">
+                    100
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record101" type="checkbox"
+                       value="" name="record101">
+                <label class="form-check-label" for="record101">
+                    101
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record102" type="checkbox"
+                       value="" name="record102">
+                <label class="form-check-label" for="record102">
+                    102
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record103" type="checkbox"
+                       value="" name="record103">
+                <label class="form-check-label" for="record103">
+                    103
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record104" type="checkbox"
+                       value="" name="record104">
+                <label class="form-check-label" for="record104">
+                    104
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record105" type="checkbox"
+                       value="" name="record105">
+                <label class="form-check-label" for="record105">
+                    105
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record106" type="checkbox"
+                       value="" name="record106">
+                <label class="form-check-label" for="record106">
+                    106
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record107" type="checkbox"
+                       value="" name="record107">
+                <label class="form-check-label" for="record107">
+                    107
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record108" type="checkbox"
+                       value="" name="record108">
+                <label class="form-check-label" for="record108">
+                    108
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record109" type="checkbox"
+                       value="" name="record109">
+                <label class="form-check-label" for="record109">
+                    109
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record111" type="checkbox"
+                       value="" name="record111">
+                <label class="form-check-label" for="record111">
+                    111
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record112" type="checkbox"
+                       value="" name="record112">
+                <label class="form-check-label" for="record112">
+                    112
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record113" type="checkbox"
+                       value="" name="record113">
+                <label class="form-check-label" for="record113">
+                    113
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record114" type="checkbox"
+                       value="" name="record114">
+                <label class="form-check-label" for="record114">
+                    114
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record115" type="checkbox"
+                       value="" name="record115">
+                <label class="form-check-label" for="record115">
+                    115
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record116" type="checkbox"
+                       value="" name="record116">
+                <label class="form-check-label" for="record116">
+                    116
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record117" type="checkbox"
+                       value="" name="record117">
+                <label class="form-check-label" for="record117">
+                    117
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record118" type="checkbox"
+                       value="" name="record118">
+                <label class="form-check-label" for="record118">
+                    118
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record119" type="checkbox"
+                       value="" name="record119">
+                <label class="form-check-label" for="record119">
+                    119
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record121" type="checkbox"
+                       value="" name="record121">
+                <label class="form-check-label" for="record121">
+                    121
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record122" type="checkbox"
+                       value="" name="record122">
+                <label class="form-check-label" for="record122">
+                    122
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record123" type="checkbox"
+                       value="" name="record123">
+                <label class="form-check-label" for="record123">
+                    123
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record124" type="checkbox"
+                       value="" name="record124">
+                <label class="form-check-label" for="record124">
+                    124
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record200" type="checkbox"
+                       value="" name="record200">
+                <label class="form-check-label" for="record200">
+                    200
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record201" type="checkbox"
+                       value="" name="record201">
+                <label class="form-check-label" for="record201">
+                    201
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record202" type="checkbox"
+                       value="" name="record202">
+                <label class="form-check-label" for="record202">
+                    202
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record203" type="checkbox"
+                       value="" name="record203">
+                <label class="form-check-label" for="record203">
+                    203
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record205" type="checkbox"
+                       value="" name="record205">
+                <label class="form-check-label" for="record205">
+                    205
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record207" type="checkbox"
+                       value="" name="record207">
+                <label class="form-check-label" for="record207">
+                    207
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record208" type="checkbox"
+                       value="" name="record208">
+                <label class="form-check-label" for="record208">
+                    208
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record209" type="checkbox"
+                       value="" name="record209">
+                <label class="form-check-label" for="record209">
+                    209
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record210" type="checkbox"
+                       value="" name="record210">
+                <label class="form-check-label" for="record210">
+                    210
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record212" type="checkbox"
+                       value="" name="record212">
+                <label class="form-check-label" for="record212">
+                    212
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record213" type="checkbox"
+                       value="" name="record213">
+                <label class="form-check-label" for="record213">
+                    213
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record214" type="checkbox"
+                       value="" name="record214">
+                <label class="form-check-label" for="record214">
+                    214
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record215" type="checkbox"
+                       value="" name="record215">
+                <label class="form-check-label" for="record215">
+                    215
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record217" type="checkbox"
+                       value="" name="record217">
+                <label class="form-check-label" for="record217">
+                    217
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record219" type="checkbox"
+                       value="" name="record219">
+                <label class="form-check-label" for="record219">
+                    219
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record220" type="checkbox"
+                       value="" name="record220">
+                <label class="form-check-label" for="record220">
+                    220
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record221" type="checkbox"
+                       value="" name="record221">
+                <label class="form-check-label" for="record221">
+                    221
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record222" type="checkbox"
+                       value="" name="record222">
+                <label class="form-check-label" for="record222">
+                    222
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record223" type="checkbox"
+                       value="" name="record223">
+                <label class="form-check-label" for="record223">
+                    223
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record228" type="checkbox"
+                       value="" name="record228">
+                <label class="form-check-label" for="record228">
+                    228
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record230" type="checkbox"
+                       value="" name="record230">
+                <label class="form-check-label" for="record230">
+                    230
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="record231" type="checkbox"
+                       value="" name="record231">
+                <label class="form-check-label" for="record231">
+                    231
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record232" type="checkbox"
+                       value="" name="record232">
+                <label class="form-check-label" for="record232">
+                    232
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record233" type="checkbox"
+                       value="" name="record233">
+                <label class="form-check-label" for="record233">
+                    233
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="record234" type="checkbox"
+                       value="" name="record234">
+                <label class="form-check-label" for="record234">
+                    234
+                </label>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-secondary btn-sm" id="checkRecordsBtn">Check recommended</button>
+    <small class="form-text text-muted">Select the records from the MIT-BIH
+        Arrhythmia Database.</small>
+
+    {# ECG Lead #}
+    <div class="form-group">
+        <label for="ecgLead">ECG Lead</label>
+        <select class="form-control" name="ecgLead" id="ecgLead">
+            <option>MLII</option>
+            <option>V1</option>
+            <option>V2</option>
+            <option>V4</option>
+            <option>V5</option>
+        </select>
+        <small class="form-text text-muted">The channel to read the signals
+            from.</small>
+    </div>
+
+    {# Start and End of sampling #}
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="sampFrom">Sample
+            from</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sampFrom" name="sampFrom" max="650000" min="0"
+                   placeholder="" type="number" value="0" required>
+            <small class="form-text text-muted">The starting sample number to
+                read for all the signals.</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="sampTo">Sample
+            to</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="sampTo" name="sampTo" max="650000" min="0"
+                   placeholder="" type="number" value="650000" required>
+            <small class="form-text text-muted">The sample number at which to stop reading for all the signals.</small>
+        </div>
+    </div>
+
+    {# Resulting Signal Length #}
+    <div class="form-group">
+        <label for="resultingSignalLength">
+            Length of extracted signals</label>
+        <input class="form-control" id="resultingSignalLength" name="resultingSignalLength" min="0"
+               placeholder="" type="number" value="320" required>
+        <small class="form-text text-muted">The length of the extracted
+            signals.</small>
+    </div>
+
+    {# Filename to save the signals #}
+    <div class="form-group">
+        <label for="extractedSignalsFilename">
+            File to save the extracted signals</label>
+        <input class="form-control" id="extractedSignalsFilename" name="extractedSignalsFilename"
+               placeholder="Enter the filename to save the extracted signals" type="text" value="" required>
+        <small class="form-text text-muted">The filename to save the extracted signals.</small>
+    </div>
+
+    <button class="btn btn-primary" id="extractSignalsBtn" type="submit">Extract signals</button>
+</form>
+<br>
+{% endblock %}
+
+{% block custom_scripts %}
+    <script src="{{ url_for('static', filename='js/signal_extraction.js') }}"></script>
+{% endblock %}

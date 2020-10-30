@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Get a Classifier{% endblock %}
+{% block content %}
+<h3>Signal analysis for record {{ record_name }}</h3>
+<br>
+<div class="row">
+    <div class="col">
+        {# Arrhythmia Type #}
+        <div class="form-group">
+            <label for="arrhythmiaType">Select the arrhythmia type</label>
+            <select class="form-control" name="arrhythmiaType" id="arrhythmiaType">
+                <option disabled selected>Choose arrhythmia type</option>
+            </select>
+            <small class="form-text text-muted">The arrhythmia type you want to plot.</small>
+        </div>
+
+        {# Intervals with that arrhythmia #}
+        <div class="form-group">
+            <label for="arrInterval">Select the interval</label>
+            <select class="form-control" name="arrInterval" id="arrInterval">
+                <option disabled selected>Choose interval</option>
+            </select>
+            <small class="form-text text-muted">The interval of the full signal want to plot.</small>
+        </div>
+
+        <p>First choose the arrhythmia type you want and the select an interval, it will be plotted in the graph.<br><br>
+        In the table below you will find how many arrhythmias were found for each type.</p>
+
+    </div>
+    <div class="col">
+        <div class="text-center">
+            <canvas id="ecgChart" style="margin: 0 auto;" width="600" height="330"></canvas>
+        </div>
+    </div>
+</div>
+<br>
+<table class="table table-sm">
+    <thead>
+    <tr>
+        <th scope="col">Arrhythmias</th>
+        <th scope="col">Amount</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+    <caption>Arrhythmias found.</caption>
+</table>
+
+<br>
+{% endblock %}
+
+{% block custom_scripts %}
+    <script>
+        const arrhythmias = [
+            {% for arr in arrhythmias %}
+                {
+                    record: '{{ arr.record }}',
+                    qrsindex: {{ arr.qrs_index }},
+                    lead: '{{ arr.lead }}',
+                    start: {{ arr.start_index }},
+                    end: {{ arr.end_index }},
+                    signal: {{ arr.interval.tolist() }},
+                    class_: '{{ arr.class_ }}'
+                },
+            {% endfor %}
+        ];
+    </script>
+    <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/signal_analyzer_report.js') }}"></script>
+{% endblock %}

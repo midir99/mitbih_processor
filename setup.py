@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="mitbih_processor",
-    version="1.0.0",
+    version="1.0.1",
     description="Process MIT-BIH Arrhythmia Database records with PyWavelets",
     long_description=README,
     url="https://github.com/jorge4larcon/mitbih_processor",
@@ -21,14 +21,17 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
     ],
-    packages=["mitbih_processor"],
+    packages=["mitbih_processor", "webclient"],
     include_package_data=True,
+    zip_safe=False,
     install_requires=[
         "numpy",
         "pandas",
         "PyWavelets",
         "scipy",
-        "wfdb"
+        "wfdb",
+        "scikit-learn",
+        "flask",
     ],
     entry_points={
         "console_scripts": [

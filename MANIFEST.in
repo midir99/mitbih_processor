@@ -1,0 +1,3 @@
+graft webclient/static
+graft webclient/templates
+global-exclude *.pyc

@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block title %}Analyze Signals{% endblock %}
+{% block content %}
+<h3>Use the classifier you generated to analyze ECG records</h3>
+<br>
+<form method="post" id="signalAnalyzerForm">
+    {# Classifier file #}
+    <div class="form-group">
+        <label for="clfFile">File with the classifier</label>
+        <input class="form-control" id="clfFile"
+               placeholder="Enter the file with the classifier"
+               type="text" name="clfFile" required>
+        <small class="form-text text-muted">Here goes the location of the
+            file with the classifier in your file system.</small>
+    </div>
+
+    {# MIT-BIH Arrhythmia Database #}
+    <div class="form-group">
+        <label for="mitdbPath">MIT-BIH Arrhythmia Database Path</label>
+        <input class="form-control" id="mitdbPath"
+               placeholder="Enter the location of the database"
+               type="text" name="mitdbPath" required>
+        <small class="form-text text-muted">Here goes the location of the
+            MIT-BIH database in your file system.</small>
+    </div>
+
+    {# Record #}
+    <div class="form-group">
+        <label for="recordName">Record from MIT-BIH Arrhythmia Database</label>
+        <select class="form-control" name="recordName" id="recordName">
+            {% for record_name in record_names %}
+                <option>{{ record_name }}</option>
+            {% endfor %}
+        </select>
+        <small class="form-text text-muted">The record you want to analyze.</small>
+    </div>
+
+    {# ECG Lead #}
+    <div class="form-group">
+        <label for="ecgLead">ECG Lead</label>
+        <select class="form-control" name="ecgLead" id="ecgLead">
+            <option>MLII</option>
+            <option>V1</option>
+            <option>V2</option>
+            <option>V4</option>
+            <option>V5</option>
+        </select>
+        <small class="form-text text-muted">The channel to read the signals
+            from.</small>
+    </div>
+
+    {# Signal Length #}
+    <div class="form-group">
+        <label for="signalLength">
+            Length of extracted signals</label>
+        <input class="form-control" id="signalLength" name="signalLength" min="0"
+               placeholder="" type="number" value="320" required>
+        <small class="form-text text-muted">The length of the extracted
+            signals.</small>
+    </div>
+
+    {# Arrhythmia types #}
+    <label>Arrhythmia Types</label>
+    <div class="row mb-2">
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="arrNormalBeat"
+                       type="checkbox"
+                       value="" name="arrNormalBeat">
+                <label class="form-check-label" for="arrNormalBeat">
+                    Normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrLeftBundleBranchBlockBeat" type="checkbox"
+                       value="" name="arrLeftBundleBranchBlockBeat">
+                <label class="form-check-label"
+                       for="arrLeftBundleBranchBlockBeat">
+                    Left bundle branch block beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrRightBundleBranchBlockBeat" type="checkbox"
+                       value="" name="arrRightBundleBranchBlockBeat">
+                <label class="form-check-label"
+                       for="arrRightBundleBranchBlockBeat">
+                    Right bundle branch block beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrAtrialPrematureBeat"
+                       type="checkbox" name="arrAtrialPrematureBeat"
+                       value="">
+                <label class="form-check-label" for="arrAtrialPrematureBeat">
+                    Atrial premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrAberratedAtrialPrematureBeat" type="checkbox"
+                       value="" name="arrAberratedAtrialPrematureBeat">
+                <label class="form-check-label"
+                       for="arrAberratedAtrialPrematureBeat">
+                    Aberrated atrial premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrNodalJunctionalPrematureBeat" type="checkbox"
+                       value="" name="arrNodalJunctionalPrematureBeat">
+                <label class="form-check-label"
+                       for="arrNodalJunctionalPrematureBeat">
+                    Nodal (junctional) premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrSupraventricularPrematureBeat" type="checkbox"
+                       value="" name="arrSupraventricularPrematureBeat">
+                <label class="form-check-label"
+                       for="arrSupraventricularPrematureBeat">
+                    Supraventricular premature beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrPrematureVentricularContraction" type="checkbox"
+                       value="" name="arrPrematureVentricularContraction">
+                <label class="form-check-label"
+                       for="arrPrematureVentricularContraction">
+                    Premature ventricular contraction
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrFusionOfVentricularAndNormalBeat" type="checkbox"
+                       value="" name="arrFusionOfVentricularAndNormalBeat">
+                <label class="form-check-label"
+                       for="arrFusionOfVentricularAndNormalBeat">
+                    Fusion of ventricular and normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrStartOfVentricularFlutterFibrillation"
+                       type="checkbox"
+                       value="" name="arrStartOfVentricularFlutterFibrillation">
+                <label class="form-check-label"
+                       for="arrStartOfVentricularFlutterFibrillation">
+                    Start of ventricular flutter/fibrillation
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check">
+                <input class="form-check-input" id="arrVentricularFlutterWave"
+                       type="checkbox"
+                       value="" name="arrVentricularFlutterWave">
+                <label class="form-check-label"
+                       for="arrVentricularFlutterWave">
+                    Ventricular flutter wave
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrEndOfVentricularFlutterFibrillation"
+                       type="checkbox"
+                       value="" name="arrEndOfVentricularFlutterFibrillation">
+                <label class="form-check-label"
+                       for="arrEndOfVentricularFlutterFibrillation">
+                    End of ventricular flutter/fibrillation
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrAtrialEscapeBeat"
+                       type="checkbox"
+                       value="" name="arrAtrialEscapeBeat">
+                <label class="form-check-label" for="arrAtrialEscapeBeat">
+                    Atrial escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrNodalJunctionalEscapeBeat" type="checkbox"
+                       value="" name="arrNodalJunctionalEscapeBeat">
+                <label class="form-check-label"
+                       for="arrNodalJunctionalEscapeBeat">
+                    Nodal (junctional) escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrVentricularEscapeBeat"
+                       type="checkbox"
+                       value="" name="arrVentricularEscapeBeat">
+                <label class="form-check-label" for="arrVentricularEscapeBeat">
+                    Ventricular escape beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrPacedBeat"
+                       type="checkbox"
+                       value="" name="arrPacedBeat">
+                <label class="form-check-label" for="arrPacedBeat">
+                    Paced beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       id="arrFusionOfPacedAndNormalBeat" type="checkbox"
+                       value="" name="arrFusionOfPacedAndNormalBeat">
+                <label class="form-check-label"
+                       for="arrFusionOfPacedAndNormalBeat">
+                    Fusion of paced and normal beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrNonConductedPWave"
+                       type="checkbox"
+                       value="" name="arrNonConductedPWave">
+                <label class="form-check-label" for="arrNonConductedPWave">
+                    Non-conducted P-wave (blocked APB)
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrUnclassifiableBeat"
+                       type="checkbox"
+                       value="" name="arrUnclassifiableBeat">
+                <label class="form-check-label" for="arrUnclassifiableBeat">
+                    Unclassifiable beat
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" id="arrIsolatedQRSLikeArtifact"
+                       type="checkbox"
+                       value="" name="arrIsolatedQRSLikeArtifact">
+                <label class="form-check-label"
+                       for="arrIsolatedQRSLikeArtifact">
+                    Isolated QRS-like artifact
+                </label>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-secondary btn-sm" id="checkArrhythmiasBtn">Check all</button>
+    <small class="form-text text-muted">Select the arrhythmia you used for feature extraction.</small>
+
+    {# Wavelet Family #}
+    <div class="form-group">
+        <label for="wavelet">Wavelet Family</label>
+        <select class="form-control" name="wavelet" id="wavelet">
+            {% for w in wavelets %}
+                <option>{{ w }}</option>
+            {% endfor %}
+        </select>
+        <small class="form-text text-muted">The wavelet to transform the signal.</small>
+    </div>
+
+    {# Decomposition Level #}
+    <div class="form-group">
+        <label for="decompositionLevel">
+            Decomposition level</label>
+        <input class="form-control" id="decompositionLevel" name="decompositionLevel" min="1"
+               placeholder="" type="number" value="1" required>
+        <small class="form-text text-muted">The number of decomposition level for wavelet transform.</small>
+    </div>
+
+
+
+    <button class="btn btn-primary" id="analyzeBtn" type="submit">Analize</button>
+</form>
+<br>
+{% endblock %}
+
+{% block custom_scripts %}
+    <script src="{{ url_for('static', filename='js/signal_analyzer.js') }}"></script>
+{% endblock %}
+

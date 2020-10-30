@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Classifier Report{% endblock %}
+{% block content %}
+<h3>MLP Classifier Report</h3>
+<table class="table table-sm">
+    <thead>
+    <tr>
+        <th scope="row">Metric</th>
+        <th scope="row">Score</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Accuracy</th>
+            <th>{{ accuracy }}</th>
+        </tr>
+        <tr>
+            <th scope="row">Precision</th>
+            <th>{{ precision }}</th>
+        </tr>
+        <tr>
+            <th scope="row">Recall</th>
+            <th>{{ recall }}</th>
+        </tr>
+        <tr>
+            <th scope="row">F1 Score</th>
+            <th>{{ f1 }}</th>
+        </tr>
+        <tr>
+            <th scope="row">Cohen Kappa Score</th>
+            <th>{{ f1 }}</th>
+        </tr>
+        <tr>
+            <th scope="row">Mathes Correlation Coefficient</th>
+            <th>{{ mcc }}</th>
+        </tr>
+    </tbody>
+</table>
+
+<p>The classifier was saved in {{ filename }}</p>
+{% endblock %}

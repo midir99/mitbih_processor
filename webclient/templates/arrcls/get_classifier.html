@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Get a Classifier{% endblock %}
+{% block content %}
+<h3>After extracting the features you can generate a Classifier</h3>
+<br>
+<form method="post" id="getClassifierForm">
+    {# Extracted features #}
+    <div class="form-group">
+        <label for="extractedFeaturesFile">CSV file with the extracted features</label>
+        <input class="form-control" id="extractedFeaturesFile"
+               placeholder="Enter the file with the extracted features"
+               type="text" name="extractedFeaturesFile" required>
+        <small class="form-text text-muted">Here goes the location of the
+            file with the extracted features in your file system.</small>
+    </div>
+
+    {# Percentage of data for training #}
+    <div class="form-group">
+        <label for="percentOfDataForTraining">
+            Percentage of data for training (%)</label>
+        <input class="form-control" id="percentOfDataForTraining" name="percentOfDataForTraining" min="0" max="100"
+               placeholder="" type="number" value="70" step="5" required>
+        <small class="form-text text-muted">The percentage of data for training the classifier.</small>
+    </div>
+
+    {# Filename to save the classifier #}
+    <div class="form-group">
+        <label for="clfFilename">
+            File to save the classifier</label>
+        <input class="form-control" id="clfFilename" name="clfFilename"
+               placeholder="Enter the filename to save the classifier" type="text" value="" required>
+        <small class="form-text text-muted">The filename to save the classifier.</small>
+    </div>
+
+    <button class="btn btn-primary" id="getClassifierBtn" type="submit">Get a classifier</button>
+</form>
+<br>
+{% endblock %}
+
+{% block custom_scripts %}
+    <script src="{{ url_for('static', filename='js/get_classifier.js') }}"></script>
+{% endblock %}
+
