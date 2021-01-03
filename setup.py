@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="mitbih_processor",
-    version="1.0.1",
+    version="1.0.2",
     description="Process MIT-BIH Arrhythmia Database records with PyWavelets",
     long_description=README,
     url="https://github.com/jorge4larcon/mitbih_processor",
