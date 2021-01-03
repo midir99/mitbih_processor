@@ -5,11 +5,11 @@ from setuptools import setup
 HERE = pathlib.Path(__file__).parent
 
 # The text of the README file
-README = (HERE / "README.md").read_text()
+README = (HERE / "README.rst").read_text()
 
 setup(
     name="mitbih_processor",
-    version="1.0.3",
+    version="1.0.4",
     description="Process MIT-BIH Arrhythmia Database records with PyWavelets",
     long_description=README,
     url="https://github.com/jorge4larcon/mitbih_processor",
